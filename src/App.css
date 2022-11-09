@@ -1,38 +1,102 @@
+.arena {
+  border: .5rem solid skyblue;
+  min-height: 70vh;
+  height: 70%;
+  min-width: 80vw;
+  width:  80%;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+.stick {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 4rem;
+  min-width: 2rem;
+  flex-flow: column;
+  z-index: 0;
 }
 
-@keyframes App-logo-spin {
+.stickHead {
+  border: 0.25rem solid red;
+  color: red;
+  background-color: red;
+  border-radius: 50%;
+  height: 0.75rem;
+  width: 0.75rem;
+}
+
+.stickBody {
+  border: 0.1rem solid red;
+  color: red;
+  background-color: red;
+  height: 2rem;
+  width: 0.1rem;
+}
+
+.stickFeet {
+  margin-top: -5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stickLeftFoot {
+  border: 0.1rem solid red;
+  color: red;
+  background-color: red;
+  height: 1.4rem;
+  width: 0.08rem;
+  transform: rotate(45deg);
+  margin: 0 6px 0 0;
+}
+
+.stickRightFoot {
+  border: 0.1rem solid red;
+  color: red;
+  background-color: red;
+  height: 1.4rem;
+  width: 0.08rem;
+  transform: rotate(-45deg);
+  margin: 0 0 0 6px;
+}
+
+@keyframes swing {
   from {
-    transform: rotate(0deg);
+    transform: rotate(-45deg) translateX(-13px);
+    top: 15%;
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(10deg) translateX(20px);
+    top: 20%;
   }
+}
+
+.stickLeftWeapon {
+  border: 2px solid blue;
+  width: 60px;
+  z-index: 1;
+  margin-left: 40px;
+  position: absolute;
+  transform: rotate(-40deg);
+  top: 20%;
+}
+
+.animateLeftWeapon {
+  animation: swing 1 .1s;
+}
+
+.stickRightWeapon {
+  border: 2px solid blue;
+  width: 60px;
+  z-index: 1;
+  margin-right: 40px;
+  position: absolute;
 }

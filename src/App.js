@@ -1,23 +1,54 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react'
+
 import './App.css';
+import { Arena } from './components/Arena';
+import { StickLeft, StickRight } from './components/Stick';
 
 function App() {
+  const [stickLeftTop, setStickLeftTop] = useState("45%")
+  const [stickLeftLeft, setStickLeftLeft] = useState("25%")
+  const [leftSwing, setLeftSwing] = useState(false)
+
+  let stickRightTop = "45%"
+  let stickRightLeft = "70%"
+
+  useEffect(() => {
+    document.addEventListener('keydown', detectKeyDown, true)
+  }, [stickLeftTop, stickLeftLeft, leftSwing])
+
+  const detectKeyDown = e => {
+    console.log('Clicked key: ', e.key)
+    if (e.key === "ArrowUp") {
+      let top = Number(stickLeftTop.replace('%', ''))
+      setStickLeftTop(top - 1 + "%")
+    }
+    if (e.key === "ArrowDown") {
+      let top = Number(stickLeftTop.replace('%', ''))
+      setStickLeftTop(top + 1 + "%")
+    }
+    if (e.key === "ArrowRight") {
+      let left = Number(stickLeftLeft.replace('%', ''))
+      setStickLeftLeft(left + 1 + "%")
+    }
+    if (e.key === "ArrowLeft") {
+      let left = Number(stickLeftLeft.replace('%', ''))
+      setStickLeftLeft(left - 1 + "%")
+    }
+    if (e.key === "Control") {
+      setLeftSwing(true)
+      setTimeout(() => {
+        setLeftSwing(false)
+      }, 100)
+    }
+    document.removeEventListener("keydown", detectKeyDown, true)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Arena>
+        <StickLeft leftSwing={leftSwing} stickLeftTop={stickLeftTop} stickLeftLeft={stickLeftLeft}></StickLeft>
+        <StickRight stickRightTop={stickRightTop} stickRightLeft={stickRightLeft}></StickRight>
+      </Arena>
     </div>
   );
 }

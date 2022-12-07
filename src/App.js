@@ -5,12 +5,34 @@ import { Arena } from './components/Arena';
 import { StickLeft, StickRight } from './components/Stick';
 
 function App() {
+  const [player, setPlayer] = useState(null)
   const [stickLeftTop, setStickLeftTop] = useState("45%")
   const [stickLeftLeft, setStickLeftLeft] = useState("25%")
   const [leftSwing, setLeftSwing] = useState(false)
 
   let stickRightTop = "45%"
   let stickRightLeft = "70%"
+
+  useEffect(() => {
+    const  fetchPlayerStatus = async () => {
+      const res = await fetch('/player', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'GET',
+      })
+
+      const playerResponse = await res.json()
+      return await playerResponse
+    }
+
+    fetchPlayerStatus()
+      .then(res => {
+        console.log(res)
+        setPlayer(res)
+      })
+  }, [])
 
   useEffect(() => {
     document.addEventListener('keydown', detectKeyDown, true)

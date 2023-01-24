@@ -21,9 +21,33 @@ function App() {
   const [rightSwing, setRightSwing] = useState(false)
 
   useEffect(() => {
+    console.log('WS MSG:', lastMessage)
     if (lastMessage !== null) {
       setMessageHistory((prev) => prev.concat(lastMessage));
+      if (e.key === "ArrowUp") {
+        let top = Number(stickLeftTop.replace('%', ''))
+        setStickRightTop(top - 1 + "%")
+      }
+      if (e.key === "ArrowDown") {
+        let top = Number(stickLeftTop.replace('%', ''))
+        setStickRightTop(top + 1 + "%")
+      }
+      if (e.key === "ArrowRight") {
+        let left = Number(stickLeftLeft.replace('%', ''))
+        setStickRightLeft(left - 1 + "%")
+      }
+      if (e.key === "ArrowLeft") {
+        let right = Number(stickLeftLeft.replace('%', ''))
+        setStickRightLeft(right + 1 + "%")
+      }
+      if (e.key === "Control") {
+        setRightSwing(true)
+        setTimeout(() => {
+          setRightSwing(false)
+        }, 100)
+      }
     }
+    
   }, [lastMessage, setMessageHistory]);
 
   useEffect(() => {
@@ -83,7 +107,7 @@ function App() {
     <div className="App">
       <Arena>
         <StickLeft leftSwing={leftSwing} stickLeftTop={stickLeftTop} stickLeftLeft={stickLeftLeft}></StickLeft>
-        <StickRight stickRightTop={stickRightTop} stickRightLeft={stickRightLeft}></StickRight>
+        <StickRight rightSwing={rightSwing} stickRightTop={stickRightTop} stickRightLeft={stickRightLeft}></StickRight>
       </Arena>
     </div>
   );

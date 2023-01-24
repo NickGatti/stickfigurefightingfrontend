@@ -89,7 +89,7 @@
   top: 20%;
 }
 
-.animateLeftWeapon {
+.animateWeapon {
   animation: swing 1 .1s;
 }
 

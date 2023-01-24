@@ -5,7 +5,7 @@ export const StickLeft = ({leftSwing, stickLeftTop, stickLeftLeft}) => {
         <div className="stick" style={{top: stickLeftTop, left: stickLeftLeft}}>
             <div className="stickHead"></div>
             <div className="stickBody"></div>
-            <div className={`stickLeftWeapon ${leftSwing ? 'animateLeftWeapon' : ''}`}></div>
+            <div className={`stickLeftWeapon ${leftSwing ? 'animateWeapon' : ''}`}></div>
             <div className="stickFeet">
                 <div className="stickLeftFoot"></div>
                 <div className="stickRightFoot"></div>
@@ -19,7 +19,7 @@ export const StickRight = ({stickRightTop, stickRightLeft}) => {
         <div className="stick" style={{top: stickRightTop, left: stickRightLeft}}>
         <div className="stickHead"></div>
         <div className="stickBody"></div>
-        <div className="stickRightWeapon"></div>
+        <div className={`stickRightWeapon ${rightSwing ? 'animateWeapon' : ''}`}></div>
         <div className="stickFeet">
             <div className="stickLeftFoot"></div>
             <div className="stickRightFoot"></div>

@@ -21,13 +21,11 @@ function App() {
   const [rightSwing, setRightSwing] = useState(false)
 
   useEffect(() => {
+    setMessageHistory((prev) => prev.concat(lastMessage));
     if (lastMessage !== null) {
-      setMessageHistory((prev) => prev.concat(lastMessage));
       const messageData = JSON.parse(lastMessage.data)
-      console.log('PlayerNumber', messageData.playerNumber !== player)
-      if (!player) {
-        setPlayer(messageData.playerNumber)
-      }
+      console.log('I AM PLAYER:', player)
+      console.log('SENDER WAS PLAYER:', messageData.playerNumber)
       if (messageData.playerNumber !== player) {
         if (messageData.message === "ArrowUp") {
           let top = Number(stickRightTop.replace('%', ''))
@@ -58,11 +56,14 @@ function App() {
   }, [lastMessage, setMessageHistory]);
 
   useEffect(() => {
+    if (player === null) {
+      handleClickSendMessage(JSON.stringify('Player joined with: ' + player + ' player status.'))
+    }
     document.addEventListener('keydown', detectKeyDown, true)
     return () => {
       document.removeEventListener('keydown', detectKeyDown, true);
     }
-  }, [stickLeftTop, stickLeftLeft, leftSwing])
+  }, [stickLeftTop, stickLeftLeft, leftSwing, player])
 
   const handleClickSendMessage = useCallback((msg) => sendMessage(msg), []);
 
@@ -75,13 +76,19 @@ function App() {
   }[readyState];
 
   useEffect(() => {
-    console.log('ESTAS', connectionStatus)
-
-  }, [readyState])
+    console.log('Connection status:', connectionStatus)
+    console.log('Last message status:', lastMessage?.data)
+    if (!player) {
+      if (lastMessage !== null) {
+        const messageData = JSON.parse(lastMessage.data)
+        console.log('HEY HEY HEY 0001', messageData.playerNumber)
+        setPlayer(JSON.parse(messageData.playerNumber));
+      }
+    }
+  }, [readyState, lastMessage, player])
 
   const detectKeyDown = e => {
     console.log('Clicked key: ', e.key)
-    if (!player) return
     if (e.key === "ArrowUp") {
       let top = Number(stickLeftTop.replace('%', ''))
       setStickLeftTop(top - 1 + "%")

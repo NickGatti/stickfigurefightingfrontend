@@ -21,33 +21,40 @@ function App() {
   const [rightSwing, setRightSwing] = useState(false)
 
   useEffect(() => {
-    console.log('WS MSG:', lastMessage)
     if (lastMessage !== null) {
       setMessageHistory((prev) => prev.concat(lastMessage));
-      if (e.key === "ArrowUp") {
-        let top = Number(stickLeftTop.replace('%', ''))
-        setStickRightTop(top - 1 + "%")
+      const messageData = JSON.parse(lastMessage.data)
+      console.log('PlayerNumber', messageData.playerNumber !== player)
+      if (!player) {
+        setPlayer(messageData.playerNumber)
       }
-      if (e.key === "ArrowDown") {
-        let top = Number(stickLeftTop.replace('%', ''))
-        setStickRightTop(top + 1 + "%")
-      }
-      if (e.key === "ArrowRight") {
-        let left = Number(stickLeftLeft.replace('%', ''))
-        setStickRightLeft(left - 1 + "%")
-      }
-      if (e.key === "ArrowLeft") {
-        let right = Number(stickLeftLeft.replace('%', ''))
-        setStickRightLeft(right + 1 + "%")
-      }
-      if (e.key === "Control") {
-        setRightSwing(true)
-        setTimeout(() => {
-          setRightSwing(false)
-        }, 100)
+      if (messageData.playerNumber !== player) {
+        if (messageData.message === "ArrowUp") {
+          let top = Number(stickRightTop.replace('%', ''))
+          setStickRightTop(top - 1 + "%")
+        }
+        if (messageData.message === "ArrowDown") {
+          let top = Number(stickRightTop.replace('%', ''))
+          setStickRightTop(top + 1 + "%")
+        }
+        if (messageData.message === "ArrowRight") {
+          console.log('got here 38 app')
+          let left = Number(stickRightLeft.replace('%', ''))
+          setStickRightLeft(left - 1 + "%")
+        }
+        if (messageData.message === "ArrowLeft") {
+          let right = Number(stickRightLeft.replace('%', ''))
+          setStickRightLeft(right + 1 + "%")
+        }
+        if (messageData.message === "Control") {
+          setRightSwing(true)
+          setTimeout(() => {
+            setRightSwing(false)
+          }, 100)
+        }
       }
     }
-    
+
   }, [lastMessage, setMessageHistory]);
 
   useEffect(() => {
@@ -69,10 +76,12 @@ function App() {
 
   useEffect(() => {
     console.log('ESTAS', connectionStatus)
+
   }, [readyState])
 
   const detectKeyDown = e => {
     console.log('Clicked key: ', e.key)
+    if (!player) return
     if (e.key === "ArrowUp") {
       let top = Number(stickLeftTop.replace('%', ''))
       setStickLeftTop(top - 1 + "%")

@@ -14,7 +14,7 @@ export const StickLeft = ({leftSwing, stickLeftTop, stickLeftLeft}) => {
     )
 }
 
-export const StickRight = ({stickRightTop, stickRightLeft}) => {
+export const StickRight = ({rightSwing, stickRightTop, stickRightLeft}) => {
     return (
         <div className="stick" style={{top: stickRightTop, left: stickRightLeft}}>
         <div className="stickHead"></div>
